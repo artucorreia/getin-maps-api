@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: getin-maps
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/getin_maps?useTimezone=true&serverTimezone=UTC
+    username: developer
+    password: 123456
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    show-sql: false
