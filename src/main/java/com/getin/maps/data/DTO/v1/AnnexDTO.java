@@ -1,7 +1,5 @@
 package com.getin.maps.data.DTO.v1;
 
-import com.getin.maps.models.Sector;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -12,13 +10,6 @@ public class AnnexDTO {
     private List<SectorDTO> sectors;
 
     public AnnexDTO() {}
-
-    public AnnexDTO(UUID id, String name, String description, List<SectorDTO> sectors) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.sectors = sectors;
-    }
 
     public UUID getId() {
         return id;

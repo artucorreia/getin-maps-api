@@ -1,6 +1,7 @@
 package com.getin.maps.data.DTO.v1;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class SectorDTO {
@@ -68,5 +69,18 @@ public class SectorDTO {
 
     public void setSubSectors(List<SubSectorDTO> subSectors) {
         this.subSectors = subSectors;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SectorDTO sectorDTO = (SectorDTO) o;
+        return Objects.equals(id, sectorDTO.id) && Objects.equals(name, sectorDTO.name) && Objects.equals(room, sectorDTO.room) && Objects.equals(description, sectorDTO.description) && Objects.equals(annexId, sectorDTO.annexId) && Objects.equals(subSectors, sectorDTO.subSectors);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, room, description, annexId, subSectors);
     }
 }

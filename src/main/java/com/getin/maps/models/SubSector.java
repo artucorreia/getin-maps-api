@@ -6,9 +6,9 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-@Table
-@Entity(name = "SUBSECTORS")
-public class SubSectors implements Serializable {
+@Entity
+@Table(name = "SUBSECTORS")
+public class SubSector implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -25,9 +25,9 @@ public class SubSectors implements Serializable {
     @ManyToOne @JoinColumn(name = "sector_id", referencedColumnName = "id", nullable = false)
     private Sector sector;
 
-    public SubSectors() {}
+    public SubSector() {}
 
-    public SubSectors(UUID id, String name, Integer room, String description, Sector sector) {
+    public SubSector(UUID id, String name, Integer room, String description, Sector sector) {
         this.id = id;
         this.name = name;
         this.room = room;
@@ -79,7 +79,7 @@ public class SubSectors implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SubSectors that = (SubSectors) o;
+        SubSector that = (SubSector) o;
         return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(room, that.room) && Objects.equals(description, that.description) && Objects.equals(sector, that.sector);
     }
 

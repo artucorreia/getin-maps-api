@@ -1,14 +1,15 @@
 package com.getin.maps.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-@Table
-@Entity(name = "ANNEXES")
+@Entity
+@Table(name = "ANNEXES")
 public class Annex implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.UUID)
@@ -20,7 +21,7 @@ public class Annex implements Serializable {
     @Column(nullable = false)
     private String description;
 
-    @OneToMany(mappedBy = "annex")
+    @OneToMany(mappedBy = "annex", fetch = FetchType.EAGER)
     private List<Sector> sectors;
 
     public Annex() {}
@@ -63,6 +64,7 @@ public class Annex implements Serializable {
     public void setSectors(List<Sector> sectors) {
         this.sectors = sectors;
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -11,3 +11,10 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: false
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+    hibernate: ERROR

@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-@Table
-@Entity(name = "SECTORS")
+@Entity
+@Table(name = "SECTORS")
 public class Sector implements Serializable {
 
     @Id
@@ -27,12 +27,12 @@ public class Sector implements Serializable {
     @ManyToOne @JoinColumn(name = "annex_id", referencedColumnName = "id", nullable = false)
     private Annex annex;
 
-    @OneToMany(mappedBy = "sector")
-    private List<SubSectors> subSectors;
+    @OneToMany(mappedBy = "sector", fetch = FetchType.EAGER)
+    private List<SubSector> subSectors;
 
     public Sector() {}
 
-    public Sector(UUID id, String name, Integer room, String description, Annex annex, List<SubSectors> subSectors) {
+    public Sector(UUID id, String name, Integer room, String description, Annex annex, List<SubSector> subSectors) {
         this.id = id;
         this.name = name;
         this.room = room;
@@ -81,11 +81,11 @@ public class Sector implements Serializable {
         this.annex = annex;
     }
 
-    public List<SubSectors> getSubSectors() {
+    public List<SubSector> getSubSectors() {
         return subSectors;
     }
 
-    public void setSubSectors(List<SubSectors> subSectors) {
+    public void setSubSectors(List<SubSector> subSectors) {
         this.subSectors = subSectors;
     }
 
