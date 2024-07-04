@@ -12,6 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/sectors")
+@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:4200"})
 public class SectorController {
 
     @Autowired
@@ -55,7 +56,7 @@ public class SectorController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> delete(UUID id) {
+    public ResponseEntity<?> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

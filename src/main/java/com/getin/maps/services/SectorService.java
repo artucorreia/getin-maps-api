@@ -1,5 +1,7 @@
 package com.getin.maps.services;
 
+import com.getin.maps.controllers.SectorController;
+import com.getin.maps.controllers.SectorController;
 import com.getin.maps.data.DTO.v1.SectorDTO;
 import com.getin.maps.exceptions.ResourceNotFoundException;
 import com.getin.maps.mapper.Mapper;
@@ -12,6 +14,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @Service
 public class SectorService {
     private final Logger logger = Logger.getLogger(SectorService.class.getName());
@@ -22,22 +27,39 @@ public class SectorService {
     public SectorDTO findById(UUID id) {
         logger.info("Finding one sector");
 
-        return Mapper.parseObject(
+        SectorDTO sectorDTO = Mapper.parseObject(
                 repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this id")),
                 SectorDTO.class
         );
+
+        sectorDTO.add(linkTo(methodOn(SectorController.class).findById(sectorDTO.getId())).withSelfRel());
+        sectorDTO.add(linkTo(methodOn(SectorController.class).findAll()).withRel("all sectors"));
+
+        return sectorDTO;
     }
 
     public SectorDTO findByName(String name) {
         logger.info("Finding one sector by name");
 
-        return Mapper.parseObject(repository.findByName(name), SectorDTO.class);
+        SectorDTO sectorDTO = Mapper.parseObject(repository.findByName(name), SectorDTO.class);
+
+        sectorDTO.add(linkTo(methodOn(SectorController.class).findById(sectorDTO.getId())).withSelfRel());
+        sectorDTO.add(linkTo(methodOn(SectorController.class).findAll()).withRel("all sectors"));
+
+        return sectorDTO;
     }
 
     public List<SectorDTO> findAll() {
         logger.info("Finding all sectors");
 
-        return Mapper.parseListObjects(repository.findAll(), SectorDTO.class);
+        return Mapper.parseListObjects(
+                repository.findAll(),
+                SectorDTO.class
+        ).stream().map(
+                sectorDTO -> sectorDTO.add(
+                        linkTo(methodOn(SectorController.class).findById(sectorDTO.getId())).withSelfRel()
+                )
+        ).toList();
     }
 
     public SectorDTO create(SectorDTO sectorDTO) {
@@ -45,7 +67,12 @@ public class SectorService {
 
         Sector entity = Mapper.parseObject(sectorDTO, Sector.class);
 
-        return Mapper.parseObject(repository.save(entity), SectorDTO.class);
+        SectorDTO sector = Mapper.parseObject(repository.save(entity), SectorDTO.class);
+
+        sector.add(linkTo(methodOn(SectorController.class).findById(sector.getId())).withSelfRel());
+        sector.add(linkTo(methodOn(SectorController.class).findAll()).withRel("all sectors"));
+
+        return sector;
     }
 
     public SectorDTO update(SectorDTO sectorDTO) {
@@ -56,7 +83,12 @@ public class SectorService {
         entity.setName(sectorDTO.getName());
         entity.setDescription(sectorDTO.getDescription());
 
-        return Mapper.parseObject(repository.save(entity), SectorDTO.class);
+        SectorDTO sector = Mapper.parseObject(repository.save(entity), SectorDTO.class);
+
+        sector.add(linkTo(methodOn(SectorController.class).findById(sector.getId())).withSelfRel());
+        sector.add(linkTo(methodOn(SectorController.class).findAll()).withRel("all sectors"));
+
+        return sector;
     }
 
     public void delete(UUID id) {

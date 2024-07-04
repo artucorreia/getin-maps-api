@@ -1,7 +1,6 @@
 package com.getin.maps.controllers;
 
 import com.getin.maps.data.DTO.v1.SubSectorDTO;
-import com.getin.maps.services.SectorService;
 import com.getin.maps.services.SubSectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,6 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/subsectors")
+@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:4200"})
 public class SubSectorController {
 
     @Autowired
@@ -56,7 +56,7 @@ public class SubSectorController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> delete(UUID id) {
+    public ResponseEntity<?> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

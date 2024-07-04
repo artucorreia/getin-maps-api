@@ -1,9 +1,11 @@
 package com.getin.maps.data.DTO.v1;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import java.util.List;
 import java.util.UUID;
 
-public class AnnexDTO {
+public class AnnexDTO extends RepresentationModel<AnnexDTO> {
     private UUID id;
     private String name;
     private String description;

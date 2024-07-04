@@ -1,8 +1,10 @@
 package com.getin.maps.data.DTO.v1;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import java.util.UUID;
 
-public class SubSectorDTO {
+public class SubSectorDTO extends RepresentationModel<SubSectorDTO> {
     private UUID id;
     private String name;
     private Integer room;
